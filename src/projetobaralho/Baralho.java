@@ -1,25 +1,27 @@
 package projetobaralho;
 
-
 import java.util.*;
 import java.lang.Math.*;
 
 /**
- * Um baralho comum de cartas. Num baralho comum, tem 52 cartas: 13 valores (AS, 2, 3, ..., 10, valete, dama, rei) de 4 naipes (ouros, espadas, copas, paus).
+ * Um baralho comum de cartas. Num baralho comum, tem 52 cartas: 13 valores (AS,
+ * 2, 3, ..., 10, valete, dama, rei) de 4 naipes (ouros, espadas, copas, paus).
  */
 public class Baralho {
 
     /**
-     * O baralho é armazenado aqui. É protected porque alguns baralhos subclasses dessa classe poderão talvez ter que mexer diretamente aqui para construir baralhos especiais.
+     * O baralho é armazenado aqui. É protected porque alguns baralhos
+     * subclasses dessa classe poderão talvez ter que mexer diretamente aqui
+     * para construir baralhos especiais.
      */
-    protected Vector baralho;
+    protected ArrayList<Carta> baralho;
 
     /**
      * Construtor de um baralho comum.
      */
     public Baralho() {
         // Usa um Vector para ter um iterador facilmente
-        baralho = new Vector();
+        baralho = new ArrayList<>();
         // enche o baralho
         for (int valor = menorValor(); valor <= maiorValor(); valor++) {
             for (int naipe = primeiroNaipe(); naipe <= ultimoNaipe(); naipe++) {
@@ -29,6 +31,23 @@ public class Baralho {
                 baralho.add(criaCarta(valor, naipe));
             }
         }
+    }
+
+    public boolean verificaSeBaralhoEmOrdem() {
+        int naipe = 1;
+        int valor = 1;
+        for (Carta carta : baralho) {
+           if(carta.getNaipe() != naipe || carta.getValor() != valor){
+               return false;
+           }
+           if(naipe == 4){
+               naipe = 1;
+               valor++;
+           }else{
+               naipe++;
+           }
+        }
+        return true;
     }
 
     /**
@@ -43,45 +62,55 @@ public class Baralho {
     }
 
     /**
-     * Recupera o valor da menor carta possível deste baralho. É possível fazer um laço de menorValor() até maiorValor() para varrer todos os valores possíveis de cartas.
+     * Recupera o valor da menor carta possível deste baralho. É possível fazer
+     * um laço de menorValor() até maiorValor() para varrer todos os valores
+     * possíveis de cartas.
      *
      * @return O menor valor.
      */
     public int menorValor() {
         return Carta.menorValor();
-        
+
     }
 
     /**
-     * Recupera o valor da maior carta possível deste baralho. É possível fazer um laço de menorValor() até maiorValor() para varrer todos os valores possíveis de cartas.
+     * Recupera o valor da maior carta possível deste baralho. É possível fazer
+     * um laço de menorValor() até maiorValor() para varrer todos os valores
+     * possíveis de cartas.
      *
      * @return O maior valor.
      */
     public int maiorValor() {
         return Carta.maiorValor();
-        
+
     }
 
     /**
-     * Recupera o "primeiro naipe" das cartas que podem estar no baralho. Ser "primeiro naipe" não significa muita coisa, já que naipes não tem valor (um naipe não é menor ou maior
-     * que o outro). Fala-se de "primeiro naipe" e "último naipe" para poder fazer um laço de primeiroNaipe() até últimoNaipe() para varrer todos os naipes possíveis de cartas.
+     * Recupera o "primeiro naipe" das cartas que podem estar no baralho. Ser
+     * "primeiro naipe" não significa muita coisa, já que naipes não tem valor
+     * (um naipe não é menor ou maior que o outro). Fala-se de "primeiro naipe"
+     * e "último naipe" para poder fazer um laço de primeiroNaipe() até
+     * últimoNaipe() para varrer todos os naipes possíveis de cartas.
      *
      * @return O primeiro naipe.
      */
     public int primeiroNaipe() {
         return Carta.primeiroNaipe();
-        
+
     }
 
     /**
-     * Recupera o "último naipe" das cartas que podem estar no baralho. Ser "último naipe" não significa muita coisa, já que naipes não tem valor (um naipe não é menor ou maior que
-     * o outro). Fala-se de "primeiro naipe" e "último naipe" para poder fazer um laço de primeiroNaipe() até últimoNaipe() para varrer todos os naipes possíveis de cartas.
+     * Recupera o "último naipe" das cartas que podem estar no baralho. Ser
+     * "último naipe" não significa muita coisa, já que naipes não tem valor (um
+     * naipe não é menor ou maior que o outro). Fala-se de "primeiro naipe" e
+     * "último naipe" para poder fazer um laço de primeiroNaipe() até
+     * últimoNaipe() para varrer todos os naipes possíveis de cartas.
      *
      * @return O primeiro naipe.
      */
     public int ultimoNaipe() {
         return Carta.ultimoNaipe();
-        
+
     }
 
     /**
@@ -110,18 +139,19 @@ public class Baralho {
         for (posição = 0; posição < númeroDeCartas() - 1; posição++) {
             // escolhe uma posição aleatória entre posição e númeroDeCartas()-1
             int posAleatória = posição + (int) ((númeroDeCartas() - posição) * Math.random());
-            
+
             // troca as cartas em posição e posAleatória
             Carta temp = (Carta) baralho.get(posição);
             baralho.set(posição, baralho.get(posAleatória));
             baralho.set(posAleatória, temp);
-            
+
         }
-        
+
     }
 
     /**
-     * Retira uma carta do topo do baralho e a retorna. A carta é removida do baralho.
+     * Retira uma carta do topo do baralho e a retorna. A carta é removida do
+     * baralho.
      *
      * @return A carta retirada do baralho.
      */

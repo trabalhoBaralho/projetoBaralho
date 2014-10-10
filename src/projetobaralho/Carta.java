@@ -23,6 +23,14 @@ public class Carta {
         this.valor = valor;
         this.naipe = naipe;
     }
+    
+    public int getValor(){
+        return valor;
+    }
+    
+    public int getNaipe(){
+        return naipe;
+    }
 
     public static int menorValor() {
         return menorValor;
